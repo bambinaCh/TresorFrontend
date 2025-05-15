@@ -9,8 +9,21 @@ function LoginUser({loginValues, setLoginValues}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(loginValues);
-        navigate('/')
+    
+        // Simuliere erfolgreichen Login
+        const user = {
+            email: loginValues.email,
+            password: loginValues.password
+        };
+    
+        // 1. Speichere die Daten im Zustand
+        setLoginValues(user);
+    
+        // 2. Speichere auch im localStorage (damit es bei Refresh bleibt)
+        localStorage.setItem('login', JSON.stringify(user));
+    
+        // 3. Weiter zur Startseite
+        navigate('/');
     };
 
     return (
