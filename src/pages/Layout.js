@@ -23,7 +23,6 @@ const Layout = ({loginValues}) => {
                     <ul>
                         <li><Link to="/user/login">login</Link></li>
                         <li><Link to="/user/register">register</Link></li>
-                        <li><Link to="/user/logout">log out</Link></li>
                     </ul>
                     </li>
                     <li><a href="/">Admin</a>

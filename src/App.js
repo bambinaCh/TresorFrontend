@@ -12,8 +12,6 @@ import Secrets from "./pages/secret/Secrets";
 import NewCredential from "./pages/secret/NewCredential";
 import NewCreditCard from "./pages/secret/NewCreditCard";
 import NewNote from "./pages/secret/NewNote";
-import LogoutUser from "./pages/user/LogoutUser";
-
 
 /**
  * App
@@ -22,8 +20,8 @@ import LogoutUser from "./pages/user/LogoutUser";
  */
 function App() {
     const [loginValues, setLoginValues] = useState({
-        email: localStorage.getItem("email") || "",  // <-- holt den gespeicherten Wert
-        password: ""
+        email: "",
+        password: "",
     });
     return (
         <BrowserRouter>
@@ -38,8 +36,6 @@ function App() {
                     <Route path="/secret/newcreditcard" element={<NewCreditCard loginValues={loginValues}/>}/>
                     <Route path="/secret/newnote" element={<NewNote loginValues={loginValues}/>}/>
                     <Route path="*" element={<NoPage/>}/>
-                    <Route path="/user/logout" element={<LogoutUser setLoginValues={setLoginValues} />} />
-
                 </Route>
             </Routes>
         </BrowserRouter>
