@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 /**
  * LoginUser
  * @author Peter Rutschmann
+ * @author Chaimaa El Jarite
  */
 function LoginUser({loginValues, setLoginValues}) {
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(loginValues);
-        navigate('/')
+const handleSubmit = async (e) => {
+    e.preventDefault();
+      //lokal specihern 
+        localStorage.setItem("email", loginValues.email);
+        navigate('/');
     };
-
     return (
         <div>
             <h2>Login user</h2>
