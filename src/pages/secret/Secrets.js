@@ -51,21 +51,41 @@ const Secrets = ({ loginValues }) => {
                                     <td>{secret.id}</td>
                                     <td>{secret.userId}</td>
                                     <td>
-                                        {(() => {
-                                            try {
-                                                const content = JSON.parse(secret.content);
-                                                return (
-                                                    <>
-                                                        <strong>{content.kind}</strong><br />
-                                                        Titel: {content.title}<br />
-                                                        Inhalt: {content.content}
-                                                    </>
-                                                );
-                                            } catch (e) {
-                                                return secret.content; // Fallback wenn JSON ungültig
-                                            }
-                                        })()}
-                                    </td>
+  {(() => {
+    try {
+      const content = JSON.parse(secret.content);
+      return (
+        <>
+          <strong>{content.kind}</strong><br />
+          {content.kind === "note" && (
+            <>
+              Titel: {content.title}<br />
+              Inhalt: {content.content}
+            </>
+          )}
+          {content.kind === "credential" && (
+            <>
+              Benutzername: {content.userName}<br />
+              Passwort: {content.password}<br />
+              URL: {content.url}
+            </>
+          )}
+          {content.kind === "creditcard" && (
+            <>
+              Kartentyp: {content.cardtype}<br />
+              Nummer: {content.cardnumber}<br />
+              Ablauf: {content.expiration}<br />
+              CVV: {content.cvv}
+            </>
+          )}
+        </>
+      );
+    } catch (e) {
+      return secret.content;
+    }
+  })()}
+</td>
+
 
                                 </tr>
                             ))

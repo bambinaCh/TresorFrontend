@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {postUser} from "../../comunication/FetchUser";
+import { postUser } from "../../comunication/FetchUser";
 
 /**
  * RegisterUser
  * @author Peter Rutschmann
  */
-function RegisterUser({loginValues, setLoginValues}) {
+function RegisterUser({ loginValues, setLoginValues }) {
     const navigate = useNavigate();
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    const validatePassword = (password) => {
+        return passwordRegex.test(password);
+    };
+
 
     const initialState = {
         firstName: "",
@@ -25,7 +32,7 @@ function RegisterUser({loginValues, setLoginValues}) {
         setErrorMessage('');
 
         //validate
-        if(credentials.password !== credentials.passwordConfirmation) {
+        if (credentials.password !== credentials.passwordConfirmation) {
             console.log("password != passwordConfirmation");
             setErrorMessage('Password and password-confirmation are not equal.');
             return;
@@ -33,7 +40,7 @@ function RegisterUser({loginValues, setLoginValues}) {
 
         try {
             await postUser(credentials);
-            setLoginValues({userName: credentials.email, password: credentials.password});
+            setLoginValues({ userName: credentials.email, password: credentials.password });
             setCredentials(initialState);
             navigate('/');
         } catch (error) {
@@ -47,41 +54,41 @@ function RegisterUser({loginValues, setLoginValues}) {
             <h2>Register user</h2>
             <form onSubmit={handleSubmit}>
                 <section>
-                <aside>
-                    <div>
-                        <label>Firstname:</label>
-                        <input
-                            type="text"
-                            value={credentials.firstName}
-                            onChange={(e) =>
-                                setCredentials(prevValues => ({...prevValues, firstName: e.target.value}))}
-                            required
-                            placeholder="Please enter your firstname *"
-                        />
-                    </div>
-                    <div>
-                        <label>Lastname:</label>
-                        <input
-                            type="text"
-                            value={credentials.lastName}
-                            onChange={(e) =>
-                                setCredentials(prevValues => ({...prevValues, lastName: e.target.value}))}
-                            required
-                            placeholder="Please enter your lastname *"
-                        />
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="text"
-                            value={credentials.email}
-                            onChange={(e) =>
-                                setCredentials(prevValues => ({...prevValues, email: e.target.value}))}
-                            required
-                            placeholder="Please enter your email"
-                        />
-                    </div>
-                </aside>
+                    <aside>
+                        <div>
+                            <label>Firstname:</label>
+                            <input
+                                type="text"
+                                value={credentials.firstName}
+                                onChange={(e) =>
+                                    setCredentials(prevValues => ({ ...prevValues, firstName: e.target.value }))}
+                                required
+                                placeholder="Please enter your firstname *"
+                            />
+                        </div>
+                        <div>
+                            <label>Lastname:</label>
+                            <input
+                                type="text"
+                                value={credentials.lastName}
+                                onChange={(e) =>
+                                    setCredentials(prevValues => ({ ...prevValues, lastName: e.target.value }))}
+                                required
+                                placeholder="Please enter your lastname *"
+                            />
+                        </div>
+                        <div>
+                            <label>Email:</label>
+                            <input
+                                type="text"
+                                value={credentials.email}
+                                onChange={(e) =>
+                                    setCredentials(prevValues => ({ ...prevValues, email: e.target.value }))}
+                                required
+                                placeholder="Please enter your email"
+                            />
+                        </div>
+                    </aside>
                     <aside>
                         <div>
                             <label>Password:</label>
@@ -89,7 +96,7 @@ function RegisterUser({loginValues, setLoginValues}) {
                                 type="text"
                                 value={credentials.password}
                                 onChange={(e) =>
-                                    setCredentials(prevValues => ({...prevValues, password: e.target.value}))}
+                                    setCredentials(prevValues => ({ ...prevValues, password: e.target.value }))}
                                 required
                                 placeholder="Please enter your pwd *"
                             />
@@ -100,7 +107,7 @@ function RegisterUser({loginValues, setLoginValues}) {
                                 type="text"
                                 value={credentials.passwordConfirmation}
                                 onChange={(e) =>
-                                    setCredentials(prevValues => ({...prevValues, passwordConfirmation: e.target.value}))}
+                                    setCredentials(prevValues => ({ ...prevValues, passwordConfirmation: e.target.value }))}
                                 required
                                 placeholder="Please confirm your pwd *"
                             />
