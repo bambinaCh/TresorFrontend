@@ -39,59 +39,56 @@ const Secrets = ({ loginValues }) => {
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>secret id</th>
-                            <th>user id</th>
-                            <th>content</th>
+                            <th>Secret ID</th>
+                            <th>User ID</th>
+                            <th>Secret type</th>
+                            <th>Content</th>
                         </tr>
                     </thead>
                     <tbody>
                         {secrets?.length > 0 ? (
-                            secrets.map(secret => (
-                                <tr key={secret.id}>
-                                    <td>{secret.id}</td>
-                                    <td>{secret.userId}</td>
-                                    <td>
-  {(() => {
-    try {
-      const content = JSON.parse(secret.content);
-      return (
-        <>
-          <strong>{content.kind}</strong><br />
-          {content.kind === "note" && (
-            <>
-              Titel: {content.title}<br />
-              Inhalt: {content.content}
-            </>
-          )}
-          {content.kind === "credential" && (
-            <>
-              Benutzername: {content.userName}<br />
-              Passwort: {content.password}<br />
-              URL: {content.url}
-            </>
-          )}
-          {content.kind === "creditcard" && (
-            <>
-              Kartentyp: {content.cardtype}<br />
-              Nummer: {content.cardnumber}<br />
-              Ablauf: {content.expiration}<br />
-              CVV: {content.cvv}
-            </>
-          )}
-        </>
-      );
-    } catch (e) {
-      return secret.content;
-    }
-  })()}
-</td>
+                            secrets.map(secret => {
+                                let content;
+                                try {
+                                    content = JSON.parse(secret.content);
+                                } catch {
+                                    content = { kind: "unknown" };
+                                }
 
-
-                                </tr>
-                            ))
+                                return (
+                                    <tr key={secret.id} data-kind={content.kind}>
+                                        <td>{secret.id}</td>
+                                        <td>{secret.userId}</td>
+                                        <td><strong>{content.kind}</strong></td>
+                                        <td>
+                                            {content.kind === "note" && (
+                                                <>
+                                                    Titel: {content.title}<br />
+                                                    Inhalt: {content.content}
+                                                </>
+                                            )}
+                                            {content.kind === "credential" && (
+                                                <>
+                                                    Benutzername: {content.userName}<br />
+                                                    Passwort: {content.password}<br />
+                                                    URL: {content.url}
+                                                </>
+                                            )}
+                                            {content.kind === "creditcard" && (
+                                                <>
+                                                    Kartentyp: {content.cardtype}<br />
+                                                    Nummer: {content.cardnumber}<br />
+                                                    Ablauf: {content.expiration}<br />
+                                                    CVV: {content.cvv}
+                                                </>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         ) : (
                             <tr>
-                                <td colSpan="3">No secrets available</td>
+                                <td colSpan="4">No secrets available</td>
                             </tr>
                         )}
                     </tbody>
