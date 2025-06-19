@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage('');
+    setErrorMessage('');
 
     try {
-      const res = await fetch('http://localhost:8080/api/auth/request-reset', {
+      const res = await fetch('/api/user/send-reset-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -17,30 +20,35 @@ function ForgotPassword() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage('📧 Email with reset instructions was sent.');
+        setMessage('Recovery link sent to your email.');
+        setEmail('');
       } else {
-        setMessage(data.message || 'Something went wrong.');
+        setErrorMessage(data.message || 'Something went wrong.');
       }
-    } catch (error) {
-      setMessage('Network error.');
+    } catch (err) {
+      setErrorMessage('Server error – please try again later.');
     }
   };
 
   return (
     <div className="register-wrapper">
       <h2 className="register-title">Forgot Password</h2>
+
       <form onSubmit={handleSubmit}>
         <div className="register-block">
-          <label>Email address:</label>
+          <label>Enter your email:</label>
           <input
             type="email"
-            required
-            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="you@example.com"
           />
-          <button type="submit" className="register-button">Send reset link</button>
-          {message && <p className="error-message">{message}</p>}
+
+          <button type="submit" className="register-button">Send Reset Link</button>
+
+          {message && <p className="error-message" style={{ color: 'green' }}>{message}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
       </form>
     </div>
