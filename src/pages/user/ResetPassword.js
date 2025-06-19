@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-function ForgotPassword() {
-  const [email, setEmail] = useState('');
+function ResetPassword() {
+  const [params] = useSearchParams();
+  const token = params.get('token');
+
+  const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -11,17 +15,15 @@ function ForgotPassword() {
     setErrorMessage('');
 
     try {
-      const res = await fetch('/api/users/auth/request-reset', {
+      const res = await fetch('/api/users/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ token, newPassword }),
       });
 
       const data = await res.json();
-
       if (res.ok) {
-        setMessage('Recovery link sent to your email.');
-        setEmail('');
+        setMessage('Password reset successful.');
       } else {
         setErrorMessage(data.message || 'Something went wrong.');
       }
@@ -32,20 +34,18 @@ function ForgotPassword() {
 
   return (
     <div className="register-wrapper">
-      <h2 className="register-title">Forgot Password</h2>
-
+      <h2 className="register-title">Set New Password</h2>
       <form onSubmit={handleSubmit}>
         <div className="register-block">
-          <label>Enter your email:</label>
+          <label>New Password:</label>
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             required
-            placeholder="youe@email.com"
           />
 
-          <button type="submit" className="register-button">Send Reset Link</button>
+          <button type="submit" className="register-button">Reset Password</button>
 
           {message && <p className="error-message" style={{ color: 'green' }}>{message}</p>}
           {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -55,4 +55,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default ResetPassword;
