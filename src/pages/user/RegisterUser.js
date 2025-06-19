@@ -16,6 +16,7 @@ function RegisterUser({ loginValues, setLoginValues }) {
         email: '',
         password: '',
         passwordConfirmation: '',
+        captchaToken: "",
     };
 
     const [credentials, setCredentials] = useState(initialState);
@@ -164,7 +165,7 @@ function RegisterUser({ loginValues, setLoginValues }) {
                     </div>
 
                     <div className="recaptcha-box">
-                        <ReCAPTCHA sitekey="6LfD6VwrAAAAANNOV3m8wupR4bT9sXNrMt-7lkGg" ref={captchaRef} />
+                        <ReCAPTCHA sitekey="6Lf-2V8rAAAAAA7LrctP9xin37TD2HX8g01wJaMF" ref={captchaRef} />
                     </div>
 
                     <button type="submit" className="register-button">Register</button>

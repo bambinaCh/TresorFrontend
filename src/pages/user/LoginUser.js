@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 function LoginUser({ loginValues, setLoginValues }) {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,15 +31,24 @@ function LoginUser({ loginValues, setLoginValues }) {
             />
 
             <label>Password:</label>
-            <input
-              type="password"
-              value={loginValues.password}
-              onChange={(e) =>
-                setLoginValues((prev) => ({ ...prev, password: e.target.value }))
-              }
-              required
-              placeholder="Your password"
-            />
+            <div className="input-with-icon">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={loginValues.password}
+                onChange={(e) =>
+                  setLoginValues((prev) => ({ ...prev, password: e.target.value }))
+                }
+                required
+                placeholder="Your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="toggle-visibility"
+              >
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
 
             <p class="forgot-password-link">
               <a href="/user/forgot-password">Forgot password?</a>

@@ -39,6 +39,8 @@ function App() {
                     <Route path="/secret/newcreditcard" element={<NewCreditCard loginValues={loginValues}/>}/>
                     <Route path="/secret/newnote" element={<NewNote loginValues={loginValues}/>}/>
                     <Route path="*" element={<NoPage/>}/>
+
+                    
                     <Route path="/user/forgot-password" element={<ForgotPassword />} />
                     <Route path="/user/reset-password" element={<ResetPassword />} />
                     
