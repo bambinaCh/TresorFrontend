@@ -24,6 +24,7 @@ function ResetPassword() {
       const data = await res.json();
       if (res.ok) {
         setMessage('Password reset successful.');
+        setNewPassword('');
       } else {
         setErrorMessage(data.message || 'Something went wrong.');
       }
@@ -43,10 +44,9 @@ function ResetPassword() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
+            placeholder="Enter new password"
           />
-
           <button type="submit" className="register-button">Reset Password</button>
-
           {message && <p className="error-message" style={{ color: 'green' }}>{message}</p>}
           {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
