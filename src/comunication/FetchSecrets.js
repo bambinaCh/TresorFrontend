@@ -19,7 +19,7 @@ export const postSecret = async ({ loginValues, content }) => {
     console.log(loginValues)
 
     try {
-        const response = await authFetch(`${API_URL}/secrets`, { //auth fetch
+        const response = await authFetch(`${API_URL}/secrets`, { //auth fetch statt fetch
 
             method: 'POST',
             headers: {
