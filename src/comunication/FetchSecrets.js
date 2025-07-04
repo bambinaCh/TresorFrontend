@@ -56,7 +56,8 @@ export const getSecretsforUser = async (loginValues) => {
     const API_URL = `${protocol}://${host}${portPart}${path}`;
 
     try {
-        const response = await fetch(`${API_URL}/secrets/byemail`, {
+        const response = await authFetch(`${API_URL}/secrets/byemail`, {
+
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
