@@ -7,9 +7,31 @@ function LoginUser({ loginValues, setLoginValues }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("email", loginValues.email);
-    navigate('/');
+
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: loginValues.email,
+          encryptPassword: loginValues.password
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data = await response.json();
+      localStorage.setItem("jwt", data.token);             // ✅ Token speichern
+      localStorage.setItem("email", loginValues.email);    // ✅ E-Mail speichern (wie vorher)
+      navigate('/');                                       // ✅ Weiterleitung
+
+    } catch (error) {
+      alert('Login fehlgeschlagen: ' + error.message);     // ✅ Fehler anzeigen
+    }
   };
+
 
   return (
     <div className="register-wrapper">
