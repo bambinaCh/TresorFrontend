@@ -1,10 +1,15 @@
 /**
  * Fetch methodes for secret api calls
  * @author Peter Rutschmann
+ * @aurhor cj
  */
 
+import { authFetch } from '../api';
+
+
+
 //Post secret to server
-export const postSecret = async ({loginValues, content}) => {
+export const postSecret = async ({ loginValues, content }) => {
     const protocol = process.env.REACT_APP_API_PROTOCOL; // "http"
     const host = process.env.REACT_APP_API_HOST; // "localhost"
     const port = process.env.REACT_APP_API_PORT; // "8080"
@@ -14,7 +19,8 @@ export const postSecret = async ({loginValues, content}) => {
     console.log(loginValues)
 
     try {
-        const response = await fetch(`${API_URL}/secrets`, {
+        const response = await authFetch(`${API_URL}/secrets`, { //auth fetch
+
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
